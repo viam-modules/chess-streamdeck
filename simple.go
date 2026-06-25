@@ -3,6 +3,7 @@ package viamstreamdeck
 import (
 	"context"
 	"fmt"
+	"strconv"
 	"sync"
 	"sync/atomic"
 	"time"
@@ -563,16 +564,31 @@ func (sdc *streamdeckComponent) DoCommand(ctx context.Context, cmd map[string]in
 }
 
 // extractMode returns the page name carried in a DoCommand response under the
-// fixed "mode" field, and whether a usable (non-empty string) value was found.
+// fixed "mode" field, and whether a usable value was found. The value may be a
+// string page name or a number (DoCommand results arrive as float64 over gRPC),
+// which is normalized to its integer string form (e.g. 2 -> "2") to match the
+// string page names in the config.
 func extractMode(res map[string]interface{}) (string, bool) {
 	if res == nil {
 		return "", false
 	}
-	mode, ok := res["mode"].(string)
-	if !ok || mode == "" {
+	switch v := res["mode"].(type) {
+	case string:
+		if v == "" {
+			return "", false
+		}
+		return v, true
+	case float64:
+		return strconv.Itoa(int(v)), true
+	case int:
+		return strconv.Itoa(v), true
+	case int32:
+		return strconv.Itoa(int(v)), true
+	case int64:
+		return strconv.Itoa(int(v)), true
+	default:
 		return "", false
 	}
-	return mode, true
 }
 
 // maybeSwitchMode inspects a DoCommand response and, if it carries a "mode"
