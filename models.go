@@ -12,7 +12,7 @@ import (
 	"github.com/dh1tw/streamdeck"
 )
 
-var NamespaceFamily = resource.ModelNamespace("erh").WithFamily("viam-streamdeck")
+var NamespaceFamily = resource.ModelNamespace("viam-modules").WithFamily("chess-streamdeck")
 
 type ModelSetup struct {
 	Model resource.Model

@@ -450,6 +450,7 @@ func (sdc *streamdeckComponent) handleKeyPress(ctx context.Context, s streamdeck
 			return err
 		}
 		sdc.logger.Infof("event %v got result %v", e, res)
+		sdc.maybeSwitchMode(ctx, res)
 		return nil
 	} else if k.snakeMethod() == "SetPosition" {
 		s, err := sdc.findSwitch(ctx, k.Component)
@@ -483,6 +484,7 @@ func (sdc *streamdeckComponent) handleDialTurn(ctx context.Context, s streamdeck
 			return err
 		}
 		sdc.logger.Infof("res: %v", res)
+		sdc.maybeSwitchMode(ctx, res)
 		return nil
 	case "SetPosition":
 		sw, ok := r.(toggleswitch.Switch)
@@ -558,6 +560,35 @@ func (sdc *streamdeckComponent) DoCommand(ctx context.Context, cmd map[string]in
 	}
 
 	return nil, fmt.Errorf("unknown command, supported commands: set_page, update_display")
+}
+
+// extractMode returns the page name carried in a DoCommand response under the
+// fixed "mode" field, and whether a usable (non-empty string) value was found.
+func extractMode(res map[string]interface{}) (string, bool) {
+	if res == nil {
+		return "", false
+	}
+	mode, ok := res["mode"].(string)
+	if !ok || mode == "" {
+		return "", false
+	}
+	return mode, true
+}
+
+// maybeSwitchMode inspects a DoCommand response and, if it carries a "mode"
+// field, switches the deck to the page named by that value. A missing mode,
+// unknown page, or non-paged config is logged and otherwise ignored - the
+// originating button press is still considered successful.
+func (sdc *streamdeckComponent) maybeSwitchMode(ctx context.Context, res map[string]interface{}) {
+	mode, ok := extractMode(res)
+	if !ok {
+		return
+	}
+
+	err := sdc.setPage(ctx, mode)
+	if err != nil {
+		sdc.logger.Warnf("could not switch to mode %q from DoCommand response: %v", mode, err)
+	}
 }
 
 func (sdc *streamdeckComponent) setPage(ctx context.Context, pageName string) error {
