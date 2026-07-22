@@ -8,9 +8,9 @@ import (
 	"github.com/dh1tw/streamdeck"
 	"github.com/golang/freetype/truetype"
 
+	xdraw "golang.org/x/image/draw"
 	"golang.org/x/image/font"
 	"golang.org/x/image/math/fixed"
-	xdraw "golang.org/x/image/draw"
 )
 
 // touchscreenFontSize is the point size used for strip text. At 72 DPI a single
