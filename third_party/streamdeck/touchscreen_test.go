@@ -22,8 +22,8 @@ func TestTouchscreenPacketsSinglePacket(t *testing.T) {
 	test.That(t, binary.LittleEndian.Uint16(p[6:]), test.ShouldEqual, uint16(TouchscreenWidth))  // w
 	test.That(t, binary.LittleEndian.Uint16(p[8:]), test.ShouldEqual, uint16(TouchscreenHeight)) // h
 	test.That(t, p[10], test.ShouldEqual, byte(1))                                               // is-last
-	test.That(t, binary.LittleEndian.Uint16(p[11:]), test.ShouldEqual, uint16(0))               // page
-	test.That(t, binary.LittleEndian.Uint16(p[13:]), test.ShouldEqual, uint16(100))             // payload len
+	test.That(t, binary.LittleEndian.Uint16(p[11:]), test.ShouldEqual, uint16(0))                // page
+	test.That(t, binary.LittleEndian.Uint16(p[13:]), test.ShouldEqual, uint16(100))              // payload len
 	test.That(t, p[touchscreenHeaderLen:touchscreenHeaderLen+100], test.ShouldResemble, payload)
 }
 
