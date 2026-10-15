@@ -8,8 +8,6 @@ go 1.25.10
 // the library already owns - hence a fork rather than a second HID handle.
 replace github.com/dh1tw/streamdeck => ./third_party/streamdeck
 
-// Local patch: fixes positional struct literal for motionplan.OrientationConstraint
-// which gained a new IgnoreTheta field in go.viam.com/rdk v1.11.0.
 replace github.com/erh/vmodutils => ./local_patches/vmodutils
 
 require (
@@ -19,7 +17,7 @@ require (
 	github.com/golang/freetype v0.0.0-20170609003504-e2365dfdc4a0
 	github.com/mitchellh/mapstructure v1.5.0
 	go.uber.org/multierr v1.11.0
-	go.viam.com/rdk v1.11.0
+	go.viam.com/rdk v1.12.0
 	go.viam.com/test v1.2.5
 	golang.org/x/image v0.41.0
 )
@@ -256,7 +254,7 @@ require (
 	github.com/urfave/cli/v3 v3.7.0 // indirect
 	github.com/viamrobotics/ice/v2 v2.3.40 // indirect
 	github.com/viamrobotics/webrtc/v3 v3.99.16 // indirect
-	github.com/viamrobotics/zeroconf v1.0.13 // indirect
+	github.com/viamrobotics/zeroconf v1.1.0 // indirect
 	github.com/wlynxg/anet v0.0.5 // indirect
 	github.com/xdg-go/pbkdf2 v1.0.0 // indirect
 	github.com/xdg-go/scram v1.1.2 // indirect
@@ -288,8 +286,8 @@ require (
 	go.opentelemetry.io/proto/otlp v1.11.0 // indirect
 	go.uber.org/goleak v1.3.0 // indirect
 	go.uber.org/zap v1.28.0 // indirect
-	go.viam.com/api v0.1.587 // indirect
-	go.viam.com/utils v0.13.2 // indirect
+	go.viam.com/api v0.1.590 // indirect
+	go.viam.com/utils v0.14.0 // indirect
 	go4.org/unsafe/assume-no-moving-gc v0.0.0-20230525183740-e7c30c78aeb2 // indirect
 	golang.org/x/crypto v0.55.0 // indirect
 	golang.org/x/exp v0.0.0-20260611194520-c48552f49976 // indirect
