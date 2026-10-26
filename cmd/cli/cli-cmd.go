@@ -66,7 +66,7 @@ func realMain() error {
 		if err != nil {
 			return err
 		}
-		defer client.Close(ctx)
+		defer func() { _ = client.Close(ctx) }()
 
 		deps, err = vmodutils.MachineToDependencies(client)
 		if err != nil {
@@ -78,7 +78,7 @@ func realMain() error {
 	if err != nil {
 		return err
 	}
-	defer sd.Close(ctx)
+	defer func() { _ = sd.Close(ctx) }()
 
 	time.Sleep(time.Second * time.Duration(*sleep))
 	return nil

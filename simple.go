@@ -306,7 +306,7 @@ func (sdc *streamdeckComponent) updateKey(ctx context.Context, k KeyConfig) erro
 			return err
 		}
 
-		if n < 0 || int(n) >= len(names) {
+		if int(n) >= len(names) {
 			return fmt.Errorf("invalid position %d", n)
 		}
 

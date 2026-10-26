@@ -64,7 +64,7 @@ func loadImages() (map[string]image.Image, error) {
 		if err != nil {
 			return fmt.Errorf("failed to read file %s: %w", path, err)
 		}
-		defer f.Close()
+		defer func() { _ = f.Close() }()
 
 		img, _, err := image.Decode(f)
 		if err != nil {
@@ -110,7 +110,7 @@ func loadFonts() (map[string]*truetype.Font, error) {
 		if err != nil {
 			return fmt.Errorf("failed to read font file %s: %w", path, err)
 		}
-		defer f.Close()
+		defer func() { _ = f.Close() }()
 
 		data, err := io.ReadAll(f)
 		if err != nil {
@@ -163,7 +163,7 @@ func LoadExternalImage(path string) error {
 	if err != nil {
 		return fmt.Errorf("failed to open image file %s: %w", path, err)
 	}
-	defer f.Close()
+	defer func() { _ = f.Close() }()
 
 	img, _, err := image.Decode(f)
 	if err != nil {
