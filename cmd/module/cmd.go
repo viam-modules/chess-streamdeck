@@ -11,12 +11,12 @@ import (
 func main() {
 
 	arr := []resource.APIModel{
-		{generic.API, viamstreamdeck.PickupModel},
-		{generic.API, viamstreamdeck.ModelAny},
+		{API: generic.API, Model: viamstreamdeck.PickupModel},
+		{API: generic.API, Model: viamstreamdeck.ModelAny},
 	}
 
 	for _, m := range viamstreamdeck.Models {
-		arr = append(arr, resource.APIModel{generic.API, m.Model})
+		arr = append(arr, resource.APIModel{API: generic.API, Model: m.Model})
 	}
 
 	module.ModularMain(arr...)

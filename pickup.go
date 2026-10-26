@@ -98,17 +98,17 @@ func NewPickup(ctx context.Context, name resource.Name, deps resource.Dependenci
 
 	var err error
 
-	p.arm, err = arm.FromDependencies(deps, conf.Arm)
+	p.arm, err = arm.FromProvider(deps, conf.Arm)
 	if err != nil {
 		return nil, err
 	}
 
-	p.gripper, err = gripper.FromDependencies(deps, conf.Gripper)
+	p.gripper, err = gripper.FromProvider(deps, conf.Gripper)
 	if err != nil {
 		return nil, err
 	}
 
-	p.motion, err = motion.FromDependencies(deps, conf.Motion)
+	p.motion, err = motion.FromProvider(deps, conf.Motion)
 	if err != nil {
 		return nil, err
 	}
@@ -118,12 +118,12 @@ func NewPickup(ctx context.Context, name resource.Name, deps resource.Dependenci
 		return nil, err
 	}
 
-	p.watchPose, err = toggleswitch.FromDependencies(deps, conf.WatchPose)
+	p.watchPose, err = toggleswitch.FromProvider(deps, conf.WatchPose)
 	if err != nil {
 		return nil, err
 	}
 
-	p.finder, err = vision.FromDependencies(deps, conf.Finder)
+	p.finder, err = vision.FromProvider(deps, conf.Finder)
 	if err != nil {
 		return nil, err
 	}
